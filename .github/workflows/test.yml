@@ -1,0 +1,16 @@
+name: Automatically
+
+on:  
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  Terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Terrafrom init
+      if: github.event_name == 'pull_request' 
+#&& github.ref == 'refs/heads/develop' 
+      run: echo "Terraform init"
+  
