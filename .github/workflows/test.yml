@@ -2,6 +2,10 @@ name: Automatically
 
 on:  
   pull_request:
+    branches:
+     - main
+     - develop
+     - QA
   workflow_dispatch:
 
 jobs:
