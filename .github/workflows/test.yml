@@ -13,7 +13,4 @@ jobs:
       if: github.event_name == 'pull_request' 
 #&& github.ref == 'refs/heads/develop' 
       run: echo "Terraform init"
-   
-    - name: Terraform apply
-     #if: ${{ github.head_ref	== 'refs/heads/main'|| github.ref == 'refs/heads/develop' }}
-    - run: echo "Terraform apply"
+  
