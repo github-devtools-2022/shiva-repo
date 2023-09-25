@@ -11,6 +11,5 @@ jobs:
     - uses: actions/checkout@v3
     - name: Terrafrom init
       if: github.event_name == 'pull_request' 
-#&& github.ref == 'refs/heads/develop' 
       run: echo "Terraform init"
   
