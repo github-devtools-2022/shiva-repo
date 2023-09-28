@@ -1,0 +1,32 @@
+name: Create Pull Request to Dev
+
+on:
+  push:
+    branches:
+      - sub1
+
+jobs:
+  create_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5.0.2
+      with:
+        base: dev  # The target branch you want to merge the changes into
+        branch: sub1  # The source branch you want to create the pull request from
+        title: "Merge sub1 into dev"  # Customize the title of the pull request
+        body: |
+          This pull request was automatically created by a GitHub Actions workflow.
+          Please review and merge as needed.
+        
+        draft: true  # Set the pull request as a draft to prevent automatic merging
+        delete_branch: false  # Disable automatic deletion of the source branch
+        labels: |
+            report
+            assignees:yashwanth-Kumar-2 
+            reviewers:Yashwanth-kumar-s
+            milestone: 1
