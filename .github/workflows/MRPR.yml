@@ -1,25 +1,22 @@
-name: Create Pull Request from develop to QA
+name: Automatically create / update pull request
 
+# run this workflow only on new feature branches, not when they're merged to main
 on:
   push:
-    branches:
-      - develop
+    branches-ignore:
+      - "develop"
 
 jobs:
-  create_pull_request:
+  create_pr_repo_sync:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Create pull request from develop to QA
-      uses: github-devtools-2022/upgraded-enigma@v.1
-      with:
-        github_token: ${{ secrets.ACTION_TOKEN }}
-        title: Automatic pull request
-        body: checking for pr
-        
-        source_branch: develop
-        target_branch: QA
-        
+      - uses: actions/checkout@v3
+      - name: Create pull request
+        id: open-pr
+        uses: github-devtools-2022/upgraded-enigma@v.1
+        with:
+          destination_branch: "QA"
+          pr_title: "Your Specific Pull Request Title"
+        #  pr_template: ".github/PULL_REQUEST_TEMPLATE.md"
+          pr_reviewer: "yashwanth-kumar-s"
+          pr_draft: true
