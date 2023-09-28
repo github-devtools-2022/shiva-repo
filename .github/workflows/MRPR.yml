@@ -1,4 +1,4 @@
-name: Create Pull Request to QA
+name: Create Pull Request from develop to QA
 
 on:
   push:
@@ -13,9 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Create pull request to QA
+    - name: Create pull request from develop to QA
       uses: devops-infra/action-pull-request@v0.5.5
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         title: Automatic pull request
+        source_branch: develop
         target_branch: QA
