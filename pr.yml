@@ -1,0 +1,25 @@
+on:
+  push:
+    branches:
+      - UAT
+
+jobs:
+  create_pr_qa_to_dev:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create pull request
+        id: open-pr
+        uses: github-devtools-2022/create-pull-request@main
+        with:
+          base: "QA"
+          branch: "UAT"
+          draft: true
+          deletebranch: false 
+          labels: |
+            report
+            assignees:yashwanth-Kumar-2 
+            reviewers:Yashwanth-kumar-s
+            milestone: 1
+            automerge: false
