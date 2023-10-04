@@ -13,7 +13,7 @@ jobs:
     - name: pr
       uses: desbravacloud/action-create-pull-requests@v1
       with:
-       origin-branch: 'nayana'
+       origin-branch: 'develop'
        target-branch: 'main'
        custom-title: 'PR created'
        custom-body: 'Please, check thease changes'
