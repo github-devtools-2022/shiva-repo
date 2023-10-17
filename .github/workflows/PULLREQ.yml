@@ -3,7 +3,7 @@ name: Create PR Comment on Push
 on:
   push:
     branches:
-      - main  # Replace 'main' with the branch you want to target
+      - test  # Replace 'main' with the branch you want to target
 
 jobs:
   create-comment:
