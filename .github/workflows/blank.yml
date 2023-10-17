@@ -1,6 +1,6 @@
 name: Automatically create/update pull request from QA to Development
 
-on:
+#on:
   push:
  
 jobs:
