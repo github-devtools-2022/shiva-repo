@@ -1,17 +1,29 @@
-on: push
+name: Create PR Comment on Push
 
+on:
+  push:
+    branches:
+      - test  # Replace 'main' with the branch you want to target
 
 jobs:
-  comment:
+  create-comment:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/github-script@v6
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create PR Comment
+        uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.ACTION_TOKEN }}
           script: |
-             github.rest.pulls.createComment({
-               pull_number: context.payload.pull_request.number,
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               body: '👋 Thanks for your pull request!'
-             })
+            if (github.context.payload.pull_request) {
+              github.rest.pulls.createComment({
+                pull_number: context.payload.pull_request.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '👋 Thanks for your pull request!'
+              });
+            } else {
+              echo "No pull request found; skipping comment creation."
+            }
