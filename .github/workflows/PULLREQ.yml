@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.MY_PAT }}
+          github-token: ${{ secrets.PAT }}
           script: |
             const { Octokit } = require("@octokit/rest");
             const octokit = new Octokit({ auth: "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" });
