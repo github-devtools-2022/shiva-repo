@@ -1,29 +1,30 @@
-name: Create PR Comment on Push
-
 on:
   push:
     branches:
-      - test  # Replace 'main' with the branch you want to target
-
+      - test		
+			 
 jobs:
-  create-comment:
+  apply-label:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Create PR Comment
-        uses: actions/github-script@v6
+      - uses: actions/github-script@v6
         with:
-          script: |
-            if (github.context.payload.pull_request) {
-              github.rest.pulls.createComment({
-                pull_number: context.payload.pull_request.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '👋 Thanks for your pull request!'
-              });
-            } else {
-              echo "No pull request found; skipping comment creation."
-            }
+          github-token: ${{ secrets.MY_PAT }}
+          script: |			 
+                   const { Octokit } = require("@octokit/rest");
+                   const octokit = new Octokit({ auth: "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" });
+                    
+                    async function createPullRequest() {
+                      const response = await octokit.pulls.create({
+                        owner: "github-devtools-2022",
+                        repo: "shiva-repo",
+                        title: "created by auton=mation",
+                        head: "test",
+                        base: "develop",
+                        body: "Your Pull Request Description",
+                      });
+                    
+                      console.log("Pull Request URL:", response.data.html_url);
+                    }
+                    
+                    createPullRequest();
