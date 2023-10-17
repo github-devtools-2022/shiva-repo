@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-        - 'test'		
-			 
+      - 'test'
+
 jobs:
   apply-label:
     runs-on: ubuntu-latest
@@ -10,21 +10,21 @@ jobs:
       - uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.MY_PAT }}
-          script: |			 
-                   const { Octokit } = require("@octokit/rest");
-                   const octokit = new Octokit({ auth: "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" });
-                    
-                    async function createPullRequest() {
-                      const response = await octokit.pulls.create({
-                        owner: "github-devtools-2022",
-                        repo: "shiva-repo",
-                        title: "created by auton=mation",
-                        head: "test",
-                        base: "develop",
-                        body: "Your Pull Request Description",
-                      });
-                    
-                      console.log("Pull Request URL:", response.data.html_url);
-                    }
-                    
-                    createPullRequest();
+          script: |
+            const { Octokit } = require("@octokit/rest");
+            const octokit = new Octokit({ auth: "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" });
+
+            async function createPullRequest() {
+              const response = await octokit.pulls.create({
+                owner: "github-devtools-2022",
+                repo: "shiva-repo",
+                title: "created by automation",
+                head: "test",
+                base: "develop",
+                body: "Your Pull Request Description",
+              });
+
+              console.log("Pull Request URL:", response.data.html_url);
+            }
+
+            createPullRequest();
