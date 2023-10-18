@@ -11,7 +11,6 @@ jobs:
         with:
           github-token: ${{ secrets.PAT }}
           script: |
-            const { Octokit } = require("@octokit/rest");
             const octokit = new Octokit({ auth: "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" });
 
             async function createPullRequest() {
