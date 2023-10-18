@@ -1,41 +1,36 @@
+name: Create Pull Request on Push
+
 on:
   push:
     branches:
-      - 'test'
+      - 'test'  # Replace 'main' with the branch you want to target
 
 jobs:
-  apply-label:
+  create-pr:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # You can specify a different Node.js version if needed.
-
-      - name: Install dependencies
-        run: npm install @octokit/rest
-
       - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const title = 'created by bot';
+            const branchName = 'test';
+            const baseBranch = 'develop';
+            const body = 'Your PR Description1';
+
+            const response = await github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              head: branchName,
+              base: baseBranch,
+              body: body,
+            });
+            console.log(`Created PR: ${response.data.html_url}`);
+
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-        run: |
-          const { Octokit } = require("@octokit/rest");
-          const octokit = new Octokit({ auth: process.env.PAT });
-
-          async function createPullRequest() {
-            const response = await octokit.pulls.create({
-              owner: "github-devtools-2022",
-              repo: "shiva-repo",
-              title: "created by automation",
-              head: "test",
-              base: "develop",
-              body: "Your Pull Request Description",
-            });
-
-            console.log("Pull Request URL:", response.data.html_url);
-          }
-
-          createPullRequest()
