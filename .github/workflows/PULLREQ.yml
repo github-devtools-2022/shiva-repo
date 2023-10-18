@@ -17,20 +17,25 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const title = 'created by bot';
-            const branchName = 'test';
-            const baseBranch = 'develop';
-            const body = 'Your PR Description1';
+            // Ensure the pull_request context is available
+            if (github.context.payload.pull_request) {
+              const title = 'Your PR Title';
+              const branchName = 'test';
+              const baseBranch = 'develop';
+              const body = 'Your PR Description1';
 
-            const response = await github.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: title,
-              head: branchName,
-              base: baseBranch,
-              body: body,
-            });
-            console.log(`Created PR: ${response.data.html_url}`);
+              const response = await github.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                head: branchName,
+                base: baseBranch,
+                body: body,
+              });
+              console.log(`Created PR: ${response.data.html_url}`);
+            } else {
+              console.log("No pull request found; skipping PR creation.");
+            }
 
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
